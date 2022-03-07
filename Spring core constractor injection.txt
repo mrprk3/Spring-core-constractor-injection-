@@ -1,0 +1,94 @@
+Constractor Injection 
+
+Employee.java
+--------------
+package com.springcore.constractorinjection;
+
+public class Employee {
+	private int id;
+	private String name;
+	private Department department;
+	
+	public Employee(int id,String name, Department department) {
+		this.id=id;
+		this.name=name;
+		this.department=department;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.id+" "+this.name+" "+this.department;
+	}
+	
+	
+
+}
+
+Department.java
+---------------
+
+package com.springcore.constractorinjection;
+
+public class Department {
+	private int id;
+	private String name;
+	
+	public Department(int id, String name) {
+		this.id=id;
+		this.name=name;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.id+" "+this.name;
+	}
+	
+	
+
+}
+
+
+
+constinjectionconfig.xml
+-------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+ 	<bean class="com.springcore.constractorinjection.Department" name="department">
+ 		<constructor-arg value="1" type="int"/>
+ 		<constructor-arg value="Information Technology" type="String"/>
+ 	</bean>
+ 	
+ 	<bean class="com.springcore.constractorinjection.Employee" name="employee">
+ 		<constructor-arg value="110" type="int"/>
+ 		<constructor-arg value="Atim Pramanik" type="String"/>
+ 		<constructor-arg ref="department"/>
+ 	</bean>
+ 	
+ 	
+</beans>
+
+
+Test.java
+---------
+
+package com.springcore.constractorinjection;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("com/springcore/constractorinjection/constinjectionconfig.xml");
+		Employee e=(Employee) context.getBean("employee");
+		System.out.println(e);
+	}
+
+}
+
